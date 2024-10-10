@@ -10,6 +10,9 @@ const {
 } = require("../controllers/tagsCRUD.js");
 const validator = require("../middlewares/validator.js");
 const bodyData = require("../validations/tags.js");
+const authenticateToken = require("../middlewares/auth.js");
+
+router.use(authenticateToken);
 
 //Rotte
 router.get("/", index);

@@ -11,6 +11,9 @@ const {
 const validator = require("../middlewares/validator.js");
 const paramSlug = require("../validations/generic.js");
 const bodyData = require("../validations/posts.js");
+const authenticateToken = require("../middlewares/auth.js");
+
+router.use(authenticateToken);
 
 //Rotte
 router.get("/", index);

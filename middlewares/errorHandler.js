@@ -1,10 +1,8 @@
 const errorHandler = (err, req, res, next) => {
-    if (err.message.includes("Prisma")) {
-        return res.status(500).json({
-            error: "Errore del server. Problema con il database.",
-        });
-    }
-    next(err);
+    console.error(err);
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Server Error";
+    res.status(statusCode).json({ success: false, message });
 };
 
 module.exports = errorHandler;
