@@ -8,6 +8,9 @@ const tagsRouter = require("./routers/tagsRouter.js");
 const authRouter = require("./routers/authRouter.js");
 const notFoundHandler = require("./middlewares/notFoundHandle.js");
 const errorHandler = require("./middlewares/errorHandler.js");
+const cors = require("cors");
+
+app.use(cors());
 
 //middlewares generici
 app.use(express.json());
