@@ -9,23 +9,23 @@ const register = async (req, res, next) => {
     try {
         const { email, name, password } = req.body;
 
-        const user = await prisma.user.create({
-            data: {
-                email,
-                name,
-                password: await hashPassword(password),
-            },
-        });
-
         const data = {
-            id: user.id,
             email,
             name,
+            password: await hashPassword(password),
         };
 
-        const token = generateToken({ data });
+        const user = await prisma.user.create({ data });
 
-        res.json({ token, data });
+        const token = generateToken({
+            email: user.email,
+            name: user.name,
+        });
+
+        delete user.id;
+        delete user.password;
+
+        res.json({ token, data: user });
     } catch (error) {
         errorHandler(error, req, res);
     }
@@ -49,15 +49,15 @@ const login = async (req, res, next) => {
             throw createError("Email o password errati", 400);
         }
 
-        const data = {
-            id: user.id,
+        const token = generateToken({
             email: user.email,
             name: user.name,
-        };
+        });
 
-        const token = generateToken({ data });
+        delete user.id;
+        delete user.password;
 
-        res.json({ token, data });
+        res.json({ token, data: user });
     } catch (error) {
         errorHandler(error, req, res);
     }
