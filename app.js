@@ -5,11 +5,14 @@ const port = process.env.PORT || 3000;
 const postsRouter = require("./routers/postsRouter.js");
 const categoriesRouter = require("./routers/categoriesRouter.js");
 const tagsRouter = require("./routers/tagsRouter.js");
+const authRouter = require("./routers/authRouter.js");
 const notFoundHandler = require("./middlewares/notFoundHandle.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 
 //middlewares generici
 app.use(express.json());
+
+app.use("/auth", authRouter);
 
 //Rotte
 app.get("/", (req, res) => {
